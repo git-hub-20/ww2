@@ -7,9 +7,8 @@
   <title>Národní skupina svobodomyslná — Mladočeši</title>
   <style>
     :root{
-      --bg: #0b0f14;
-      --panel: rgba(255,255,255,0.04);
-      --panel2: rgba(255,255,255,0.06);
+      --bg0:#070a0e;
+      --bg1:#0b0f14;
       --text: rgba(255,255,255,0.92);
       --muted: rgba(255,255,255,0.70);
       --hair: rgba(255,255,255,0.12);
@@ -24,12 +23,15 @@
       margin:0;
       font-family: "Times New Roman", Times, serif;
       color: var(--text);
-      background: radial-gradient(900px 600px at 20% 0%, rgba(52,72,200,0.22), transparent 55%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(224,32,42,0.18), transparent 55%),
-                  linear-gradient(180deg, #070a0e 0%, #0b0f14 40%, #070a0e 100%);
+      /* smooth background; no hard bands */
+      background:
+        radial-gradient(1100px 720px at 18% 8%, rgba(52,72,200,0.24), transparent 60%),
+        radial-gradient(1100px 720px at 82% 10%, rgba(224,32,42,0.20), transparent 62%),
+        radial-gradient(900px 700px at 50% 55%, rgba(255,255,255,0.05), transparent 70%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg0) 100%);
+      background-attachment: fixed;
     }
 
-    a{ color:inherit; text-decoration:none; }
     .wrap{ min-height:100%; display:flex; flex-direction:column; }
 
     header{
@@ -92,9 +94,12 @@
       margin: 0 auto;
       padding: 36px 18px 64px;
       flex: 1 1 auto;
+      display:flex;
+      flex-direction:column;
+      gap: 18px;
     }
 
-    .hero{
+    .card{
       position:relative;
       border: 1px solid var(--hair);
       background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
@@ -102,18 +107,18 @@
       overflow:hidden;
     }
 
-    .hero::before{
+    .card::before{
       content:"";
       position:absolute;
       inset:-2px;
       background:
-        linear-gradient(135deg, rgba(224,32,42,0.24), transparent 35%),
-        linear-gradient(315deg, rgba(52,72,200,0.22), transparent 35%);
+        linear-gradient(135deg, rgba(224,32,42,0.22), transparent 38%),
+        linear-gradient(315deg, rgba(52,72,200,0.20), transparent 38%);
       pointer-events:none;
       opacity:0.9;
     }
 
-    .hero-inner{
+    .card-inner{
       position:relative;
       padding: 28px 22px 26px;
     }
@@ -125,12 +130,19 @@
       letter-spacing: 0.01em;
     }
 
+    h2{
+      margin:0 0 10px;
+      font-size: clamp(20px, 3.2vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
     .subline{
       margin: 0 0 18px;
       font-size: 18px;
       line-height: 1.55;
       color: var(--muted);
-      max-width: 65ch;
+      max-width: 70ch;
     }
 
     .rule{
@@ -146,36 +158,123 @@
       font-size: 19px;
       line-height: 1.75;
     }
+    .manifest p{ margin:0; }
+    .accent{ font-weight: 700; }
 
-    .manifest p{
-      margin:0;
-    }
-
-    .accent{
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .tagline{
-      margin-top: 22px;
-      padding-top: 16px;
-      border-top: 1px solid var(--hair);
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
+    /* Carousel */
+    .carousel-top{
       display:flex;
-      align-items:flex-start;
-      gap:10px;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .carousel-meta{
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      white-space:nowrap;
     }
 
-    .tag-dot{
-      width: 8px;
-      height: 8px;
-      margin-top: 8px;
+    .viewport{
+      position:relative;
+      border: 1px solid var(--hair);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(0,0,0,0.22);
+    }
+
+    .viewport::before{
+      content:"";
+      position:absolute;
+      inset: -80px -120px -80px -120px;
+      background:
+        radial-gradient(520px 420px at 20% 40%, rgba(52,72,200,0.22), transparent 60%),
+        radial-gradient(520px 420px at 80% 60%, rgba(224,32,42,0.18), transparent 60%),
+        radial-gradient(700px 520px at 50% 20%, rgba(255,255,255,0.05), transparent 70%);
+      opacity: 0.95;
+      pointer-events:none;
+      filter: blur(10px);
+    }
+
+    .slide{
+      position:relative;
+      padding: 20px 18px 16px;
+      min-height: 128px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .slide p{
+      margin:0;
+      font-size: clamp(18px, 2.15vw, 21px);
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .btn{
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--hair);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      cursor: pointer;
+      user-select:none;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.06); }
+    .btn:active{ transform: translateY(1px); }
+
+    .dots{
+      display:flex;
+      gap: 6px;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      flex: 1 1 auto;
+      padding: 0 2px;
+    }
+    .dot{
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      cursor:pointer;
+    }
+    .dot.active{
       background: conic-gradient(from 180deg, var(--blue), var(--red));
-      flex: 0 0 auto;
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.34);
+    }
+
+    /* Instagram embed wrapper */
+    .ig-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      width:100%;
+      margin-top: 6px;
+    }
+    .instagram-media{
+      background: rgba(0,0,0,0.18) !important;
+      border: 1px solid var(--hair) !important;
+      border-radius: 16px !important;
+      max-width: 560px !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    .instagram-media iframe{
+      border-radius: 14px !important;
     }
 
     footer{
@@ -195,19 +294,20 @@
       letter-spacing: 0.02em;
     }
 
-    /* Small screens */
     @media (max-width: 520px){
       .brand .name{ font-size: 16px; }
       .manifest{ font-size: 18px; }
-      .hero-inner{ padding: 24px 18px; }
+      .card-inner{ padding: 24px 18px; }
+      .slide{ padding: 18px 16px 14px; min-height: 140px; }
+      .btn{ padding: 10px 10px; }
     }
 
-    /* Print */
     @media print{
       body{ background:#fff; color:#000; }
-      header, footer{ display:none; }
-      .hero{ border: none; background: none; }
-      .hero::before{ display:none; }
+      header, footer, .controls, .dots, .carousel-meta{ display:none; }
+      .card, .viewport{ border:none; background:none; }
+      .card::before, .viewport::before{ display:none; }
+      .manifest, .slide p{ color:#000; }
       .manifest{ font-size: 14pt; line-height: 1.5; }
     }
   </style>
@@ -217,13 +317,10 @@
     <header>
       <div class="header-inner">
         <div class="mark" aria-label="Záhlaví">
-          <!-- Inline SVG logo (kompas/pochodeň v národních barvách) -->
+          <!-- Inline SVG logo with white inner triangle -->
           <svg class="logo" viewBox="0 0 120 160" role="img" aria-label="Logo">
-            <!-- top (red) -->
             <path d="M60 6 L114 82 H86 L60 40 L34 82 H6 Z" fill="var(--red)"/>
-            <!-- inner cutout (background) -->
-            <path d="M60 52 L78 82 H42 Z" fill="var(--bg)"/>
-            <!-- bottom (blue) -->
+            <path d="M60 52 L78 82 H42 Z" fill="#ffffff"/>
             <path d="M6 82 H114 L60 154 Z" fill="var(--blue)"/>
           </svg>
 
@@ -236,68 +333,59 @@
     </header>
 
     <main>
-      <section class="hero" aria-label="Manifest">
-        <div class="hero-inner">
-          <h1></h1>
-          <p class="subline">
-              
-          </p>
-
+      <!-- Manifest -->
+      <section class="card" aria-label="Manifest">
+        <div class="card-inner">
+          <h1>Manifest</h1>
+          <p class="subline"></p>
           <div class="rule"></div>
 
           <div class="manifest">
-            <p>
-              <span class="accent">Mladočeši</span> jsou názorová a společensko-kritická platforma, nikoli politická strana.
-              Nevznikají proto, aby kandidovali, ale proto, aby znovu pojmenovali realitu, kterou oficiální politika, média,
-              influenceři a bohužel i akademická sféra systematicky obcházejí.
-            </p>
+            <p><span class="accent">Mladočeši</span> jsou názorová a společensko-kritická platforma, nikoli politická strana. Nevznikají proto, aby kandidovali, ale proto, aby znovu pojmenovali realitu, kterou oficiální politika, média, influenceři a bohužel i akademická sféra systematicky obcházejí.</p>
+            <p>Vycházíme z přesvědčení, že současná společnost selhává nikoli kvůli nedostatku technologií či bohatství, ale kvůli rozpadu přirozených komunit, ztrátě smyslu, atomizaci jednotlivce, nedostatku racionality, omezení svobodné debaty a ideologickému chaosu.</p>
+            <p>Nabízíme alternativní pohled na svět, který se neopírá o kulturní války, identitární dogmata ani slepý ekonomismus, ale o soudržnost, odpovědnost, zdravý rozum a empiricky podloženou kritiku současného nastavení systému.</p>
+            <p>Prosazujeme komunitarismus jako protiváhu extrémního individualismu i anonymního byrokratického státu.</p>
+            <p>Homogenní kulturní rámec považujeme za legitimní předpoklad sociální důvěry, solidarity a dlouhodobé stability. Respekt k individuálním odlišnostem je možný pouze tehdy, existuje-li pevný společný základ.</p>
+            <p>Společnost rozdělená na soupeřící identity není svobodná, ale konfliktní a manipulovatelná.</p>
+            <p>Mladočeši odmítají konzumismus jako dominantní životní ideologii. Současný systém systematicky produkuje nespokojenost, závislosti, zbytečnou práci a psychické vyčerpání. Marketing, digitální platformy a sociální sítě těží z oslabeného sebevědomí, levného dopaminu a krádeže pozornosti.</p>
+            <p>Usilujeme o společnost, kde technologie slouží lidem, nikoli lidé technologiím, kde je chráněno soukromí a kde práce má skutečný smysl.</p>
+            <p>O společnost složenou z malých, stabilních komunit, kde se lidský život neredukuje na odcizené přežívání, během kterého se snažíme co nejdéle ubavit k smrti.</p>
+          </div>
+        </div>
+      </section>
 
-            <p>
-              Vycházíme z přesvědčení, že současná společnost selhává nikoli kvůli nedostatku technologií či bohatství,
-              ale kvůli rozpadu přirozených komunit, ztrátě smyslu, atomizaci jednotlivce, nedostatku racionality,
-              omezení svobodné debaty a ideologickému chaosu.
-            </p>
-
-            <p>
-              Nabízíme alternativní pohled na svět, který se neopírá o kulturní války, identitární dogmata ani slepý ekonomismus,
-              ale o soudržnost, odpovědnost, zdravý rozum a empiricky podloženou kritiku současného nastavení systému.
-            </p>
-
-            <p>
-              Prosazujeme komunitarismus jako protiváhu extrémního individualismu i anonymního byrokratického státu.
-            </p>
-
-            <p>
-              Homogenní kulturní rámec považujeme za legitimní předpoklad sociální důvěry, solidarity a dlouhodobé stability.
-              Respekt k individuálním odlišnostem je možný pouze tehdy, existuje-li pevný společný základ.
-            </p>
-
-            <p>
-              Společnost rozdělená na soupeřící identity není svobodná, ale konfliktní a manipulovatelná.
-            </p>
-
-            <p>
-              Mladočeši odmítají konzumismus jako dominantní životní ideologii. Současný systém systematicky produkuje nespokojenost,
-              závislosti, zbytečnou práci a psychické vyčerpání. Marketing, digitální platformy a sociální sítě těží z oslabeného
-              sebevědomí, levného dopaminu a krádeže pozornosti.
-            </p>
-
-            <p>
-              Usilujeme o společnost, kde technologie slouží lidem, nikoli lidé technologiím, kde je chráněno soukromí a kde práce
-              má skutečný smysl.
-            </p>
-
-            <p>
-              O společnost složenou z malých, stabilních komunit, kde se lidský život neredukuje na odcizené přežívání, během kterého
-              se snažíme co nejdéle ubavit k smrti.
-            </p>
+      <!-- Carousel (shorter UI; texts already start with "Narodili jsme se do světa...") -->
+      <section class="card" aria-label="Narodili jsme se do světa">
+        <div class="card-inner">
+          <div class="carousel-top">
+            
+            <div class="carousel-meta"><span id="idx">1</span>/<span id="total">1</span></div>
           </div>
 
-          <div class="tagline" aria-label="Poznámka">
-            <div class="tag-dot" aria-hidden="true"></div>
-            <div>
-              mladocesi1@gmail.com
+          <div class="viewport" aria-live="polite">
+            <div class="slide">
+              <p id="slideText"></p>
             </div>
+          </div>
+
+          <div class="controls" aria-label="Ovládání karuselu">
+            <button class="btn" id="prev" type="button" aria-label="Předchozí">◀</button>
+            <div class="dots" id="dots" aria-label="Indikátory"></div>
+            <button class="btn" id="next" type="button" aria-label="Další">▶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instagram -->
+      <section class="card" aria-label="Instagram">
+        <div class="card-inner">
+          
+          <div class="ig-wrap">
+            <blockquote
+              class="instagram-media"
+              data-instgrm-permalink="https://www.instagram.com/jsmemladocesi/"
+              data-instgrm-version="14">
+            </blockquote>
           </div>
         </div>
       </section>
@@ -306,15 +394,94 @@
     <footer>
       <div class="footer-inner">
         <div>© <span id="y"></span> Národní skupina svobodomyslná</div>
-        <div>Created by P-V-</div>
+        <div>Vytvořil PV</div>
       </div>
     </footer>
   </div>
 
   <script>
-    // year in footer
+    const slides = [
+      "Narodili jsme se do světa, kde je cestování a hédonismus dostupnější než bydlení a vlastní rodina, na hypotéku dosáhne jen pětina mladých.",
+      "Narodili jsme se do světa, který drtí tisíce rodin pod exekucemi, závislostmi a domácím násilím.",
+      "Narodili jsme se do světa, který zvládl do velké míry pochopit lidské chování a skrze reklamu či algoritmy námi od narození manipuluje.",
+      "Narodili jsme se do světa, kde z nás algoritmy sociálních sítí vyždímají skrze dopaminové receptory poslední kapku základních emocí a nechají nás zcela prázdné.",
+      "Narodili jsme se do světa, který roztříštil rodiny a komunity, které nám donedávna nahrazovaly přirozeně existující tlupy.",
+      "Narodili jsme se do světa, který vykastroval mezilidské vztahy a partnerství a začal preferovat přetvářku, faleš a zasypal nás pornografií a soft-pornem.",
+      "Narodili jsme se do světa, který dělá život tak nesnesitelně nepřirozený, že stále více lidí musí brát antidepresiva, aby v něm zvládli přežít.",
+      "Narodili jsme se do světa, který nejenže člověka odcizil od jeho práce, ale ještě usilovně produkuje práce naprosto zbytečné, které nevytváří žádné hodnoty.",
+      "Narodili jsme se do světa, který v nás neustále povzbuzuje jednoduché emoce – převážně pak nenávist – a naopak potlačuje hlubší, které dávají životu opravdový smysl.",
+      "Narodili jsme se do světa, který si neváží bezpečnosti a sociální koheze starého kontinentu a rozdmýchává konflikty a nenávist mezi lidmi a národy.",
+      "Narodili jsme se do světa, který člověku hází na záda tolik zbytečných pravidel a povinností, že je schopen sotva stát.",
+      "Narodili jsme se do světa plného úniků, syntetických i virtuálních drog, mělké zábavy, rychlosti a nestálosti, ve kterém jsme bombardováni levným a instantním potěšením, zastiňujícím skutečné štěstí.",
+      "Narodili jsme se do světa, kde nám marketing úmyslně podrývá sebevědomí, aby nám prodal „řešení“. Mladí muži a ženy nenávidí vlastní těla a sami sebe, jen aby značka zvýšila obrat o 5 %.",
+      "Narodili jsme se do světa, kde mají rodiče tolik povinností a tolik možností zábavy, že se nám nemohli věnovat a dali nám telefony, abychom byli v klidu a neobtěžovali je svou zvídavostí.",
+      "Narodili jsme se do světa, ve kterém lidstvo šíleným tempem drancuje přírodní zdroje a zatápí na katastrofu globálních rozměrů.",
+      "Narodili jsme se do světa sociálních sítí, kde jsou rozum, fakta a rozvaha pohřbeny pod nánosem rychlých emocí, stupidity, extremismu, simulaker a ukřičenosti.",
+      "Narodili jsme se do světa, ve kterém mocní raději nahradí zaměstnance roboty a lidmi z rozvojových zemí, než aby museli platit férovější mzdu.",
+      "Narodili jsme se do světa, kde za znásilnění odchází pedofilní prase s podmínkou, zatímco důchodce s rakovinou dostane za marihuanu 8 let vězení.",
+      "Narodili jsme se do světa, který nás dělá hloupými, zlými, nešťastnými, prázdnými a nezdravými.",
+      "A do světa, ve kterém se jeho tvůrci ještě odvažují označovat nás za slabou a ufňukanou generaci sněžných vloček."
+    ];
+
+    const slideText = document.getElementById("slideText");
+    const idxEl = document.getElementById("idx");
+    const totalEl = document.getElementById("total");
+    const dotsEl = document.getElementById("dots");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    let i = 0;
+
+    function renderDots(){
+      // keep it shorter visually: show at most 12 dots, windowed around current
+      const maxDots = 12;
+      dotsEl.innerHTML = "";
+
+      let start = 0, end = slides.length;
+      if(slides.length > maxDots){
+        const half = Math.floor(maxDots/2);
+        start = Math.max(0, i - half);
+        end = start + maxDots;
+        if(end > slides.length){
+          end = slides.length;
+          start = end - maxDots;
+        }
+      }
+
+      for(let d=start; d<end; d++){
+        const b = document.createElement("button");
+        b.className = "dot" + (d===i ? " active" : "");
+        b.type = "button";
+        b.title = `${d+1}/${slides.length}`;
+        b.setAttribute("aria-label", `Přejít na ${d+1}`);
+        b.addEventListener("click", () => { i = d; render(); });
+        dotsEl.appendChild(b);
+      }
+    }
+
+    function render(){
+      slideText.textContent = slides[i];
+      idxEl.textContent = String(i+1);
+      totalEl.textContent = String(slides.length);
+      renderDots();
+    }
+
+    function prev(){ i = (i - 1 + slides.length) % slides.length; render(); }
+    function next(){ i = (i + 1) % slides.length; render(); }
+
+    prevBtn.addEventListener("click", prev);
+    nextBtn.addEventListener("click", next);
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft") prev();
+      if(e.key === "ArrowRight") next();
+    });
+
+    render();
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
+
+  <!-- Instagram embed script (once) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
-
